@@ -25,5 +25,6 @@ Delivery instruction can be found [here](README.md).
 Please do a pull request and we will send you our questions via the comments functionality of github!
 
 It would be good if the code is accompanied by a 1-page report of the work you have done.
-Please, do not spend more than an afternoon on this task. It is just a basis to allow a technical interview and a pleasant tech discussion! 
+
+Please, do not spend more than an afternoon on this task! It is just a basis to allow a technical interview and a pleasant tech discussion! 
 
