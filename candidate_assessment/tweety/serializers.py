@@ -19,6 +19,7 @@ class UserRegistrationSerializer(serializers.HyperlinkedModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
+        """ Creates a User entity and stores it into the db """
         password = validated_data.pop('password')
         user = User(**validated_data)
         user.set_password(password)
