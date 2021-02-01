@@ -46,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'requestlogs.middleware.RequestLogsMiddleware',
 ]
 
 ROOT_URLCONF = 'my_site.urls'
@@ -127,7 +128,12 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.IsAuthenticated',
-    ]
+    ],
+    'EXCEPTION_HANDLER': 'requestlogs.views.exception_handler',
+    'DEFAULT_RENDERER_CLASSES': [
+            'rest_framework.renderers.JSONRenderer',
+            'rest_framework_csv.renderers.CSVRenderer'
+        ]
 }
 
 
@@ -138,7 +144,12 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(*BASE_DIR.parts, "tweety.log"),
+            'filename': os.path.join(*BASE_DIR.parts, "tweety_django.log"),
+        },
+        'requestlogs_to_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(*BASE_DIR.parts, "tweety_django_requests.log"),
         },
     },
     'loggers': {
@@ -147,8 +158,16 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
+        'requestlogs': {
+            'handlers': ['requestlogs_to_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        }
     },
 }
 
 
+# Twitter API
 SEARCH_TWEETS_CREDENTIAL_FILE = os.path.join(*BASE_DIR.parts, "credentials.yml")
+TWEETS_PER_CALL = 100
+MAX_TWEETS = 10

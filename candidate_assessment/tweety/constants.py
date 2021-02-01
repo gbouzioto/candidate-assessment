@@ -1,3 +1,7 @@
-SEARCH_TWEETS_KEY = "search_tweets_api"
-SEARCH_TWEETS_HASHTAG = "#cryptocurrency"
-SEARCH_TWEETS_INTERVAL = ""
+""" Constants """
+# Twitter API
+TWITTER_QUERY = "#covid lang:en"
+TWITTER_TOPIC = "covid"
+ONE_DAY_BEFORE = "1d"
+ONE_MINUTE_BEFORE = "1m"
+TWEET_FIELDS = "created_at"

@@ -1,15 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import TweetWordCloud
-
-
-class TweetWordCloudSerializer(serializers.HyperlinkedModelSerializer):
-    """ Serializer class for model TweetWordCloud """
-    class Meta:
-        model = TweetWordCloud
-        fields = ["url", "first_tweet_timestamp", "last_tweet_timestamp", "topic", "words"]
-
 
 class UserRegistrationSerializer(serializers.HyperlinkedModelSerializer):
     """ Serializer class for model User """
@@ -25,3 +16,11 @@ class UserRegistrationSerializer(serializers.HyperlinkedModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class TweetWordCloudSerializer(serializers.Serializer):
+    """ Serializer class for tweet-word-cloud request"""
+    response_format = serializers.ChoiceField(required=True, choices=['json', 'csv'],
+                                              help_text="Response format can be either json or csv.")
+    words = serializers.IntegerField(required=True, min_value=1,
+                                     help_text="Number of words to be returned, must be a positive integer.")
