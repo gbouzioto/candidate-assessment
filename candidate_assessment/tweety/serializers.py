@@ -2,11 +2,11 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 
-class UserRegistrationSerializer(serializers.HyperlinkedModelSerializer):
+class UserRegistrationSerializer(serializers.ModelSerializer):
     """ Serializer class for model User """
     class Meta:
         model = User
-        fields = ["url", "username", "password"]
+        fields = ["username", "password"]
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):

@@ -143,13 +143,17 @@ LOGGING = {
     'handlers': {
         'file': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(*BASE_DIR.parts, "tweety_django.log"),
+            'backupCount': 1,  # keep at most 1 log files
+            'maxBytes': 5242880  # 5MB
         },
         'requestlogs_to_file': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(*BASE_DIR.parts, "tweety_django_requests.log"),
+            'backupCount': 1,  # keep at most 1 log files
+            'maxBytes': 5242880  # 5MB
         },
     },
     'loggers': {
@@ -170,4 +174,4 @@ LOGGING = {
 # Twitter API
 SEARCH_TWEETS_CREDENTIAL_FILE = os.path.join(*BASE_DIR.parts, "credentials.yml")
 TWEETS_PER_CALL = 100
-MAX_TWEETS = 10
+MAX_TWEETS = 1000

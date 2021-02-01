@@ -1,19 +1,7 @@
-"""
-General utility functions and classes
-"""
 import datetime
-import logging
 import re
 
-import searchtweets
-from django.conf import settings
-from rest_framework_csv.renderers import CSVRenderer
-
-from . import exceptions
-
-logger = logging.getLogger(__name__)
-
-search_args = searchtweets.load_credentials(settings.SEARCH_TWEETS_CREDENTIAL_FILE, env_overwrite=False)
+from mock_constants import *
 
 
 class TweetTextParser(object):
@@ -69,10 +57,10 @@ class TweetTextParser(object):
             tweet = tweets[i]
             if created_time := tweet.get('created_at'):
                 return created_time
-        logger.error("Timestamp not included in tweets.\nConsider adding created_time "
-                     "field in the request towards twitter API")
-        detail = "Could not retrieve timestamp value from tweets provided by the Twitter API. Please try again later."
-        raise exceptions.TweetyParserException(detail=detail)
+        # logger.error("Timestamp not included in tweets.\nConsider adding created_time "
+        #              "field in the request towards twitter API")
+        # detail = "Could not retrieve timestamp value from tweets provided by the Twitter API. Please try again later."
+        # raise exceptions.TweetyParserException(detail=detail)
 
     def extract_word_cloud(self, tweets, words, topic, fmt='json'):
         """
@@ -114,9 +102,9 @@ class TweetTextParser(object):
         }
         :rtype: dict
         """
-        if not tweets:
-            detail = "Insufficient number of tweets provided by the Twitter API. Please try again later."
-            raise exceptions.TweetyParserException(detail=detail)
+        # if not tweets:
+        #     detail = "Insufficient number of tweets provided by the Twitter API. Please try again later."
+        #     raise exceptions.TweetyParserException(detail=detail)
 
         word_set = set()
         first_tweet_timestamp = self._extract_first_timestamp(tweets)
@@ -133,21 +121,21 @@ class TweetTextParser(object):
                     word_set.update(tokens)
                 else:
                     # length of words + tokens >= words, so add tokens to the set
-                    # till the words limit is reached or the tokens have been exhausted
+                    # till the the words limit is reached or the tokens have been exhausted
                     for word in tokens:
                         word_set.add(word)
                         if len(word_set) == words:
                             break
 
         if len(word_set) < words:
-            message = f"Number of words requested: {words} was bigger than the one in the number" \
+            message = f"Number of words requested: {words} was bigger than that in the number" \
                       f" of tweets: {len(word_set)}.\nConsider increasing settings.MAX_TWEETS value."
-            logger.warning(message)
+            # logger.warning(message)
+            print(message)
 
         words = sorted(list(word_set))
         if fmt == 'csv':
             words = ", ".join(words)
-
         return {
             "words": words,
             "topic": topic,
@@ -156,5 +144,8 @@ class TweetTextParser(object):
         }
 
 
-class TweetyCsvRenderer(CSVRenderer):
-    header = ['words', 'topic', 'first_tweet_timestamp', "last_tweet_timestamp"]
+p = TweetTextParser()
+import pprint
+r = p.extract_word_cloud(MOCK_TWEETS, words=1000, topic="covid", fmt='json')
+pprint.pprint(r)
+print(len(r['words']))
