@@ -1,3 +1,4 @@
+""" Unittests for utils file"""
 from unittest import mock
 from copy import deepcopy
 from rest_framework.test import APITestCase
@@ -58,10 +59,10 @@ class TestTweetTextParserTestCase(APITestCase):
         for tweet in tweets:
             del tweet["created_at"]
 
-        with self.assertRaises(exceptions.TweetyParserException) as cm:
+        with self.assertRaises(exceptions.TweetyParserException) as context_manager:
             self.parser._extract_first_timestamp(tweets)
 
-        err = cm.exception
+        err = context_manager.exception
         mock_logger.error.assert_called_once()
         self.assertEqual(err.detail, err_msg)
 
@@ -142,8 +143,8 @@ class TestTweetTextParserTestCase(APITestCase):
         tweets = []
         words = 10
 
-        with self.assertRaises(exceptions.TweetyParserException) as cm:
+        with self.assertRaises(exceptions.TweetyParserException) as context_manager:
             self.parser.extract_word_cloud(tweets, words, self.topic)
 
-        err = cm.exception
+        err = context_manager.exception
         self.assertEqual(err.detail, err_msg)

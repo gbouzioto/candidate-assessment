@@ -1,3 +1,6 @@
+"""
+tweety Views
+"""
 import logging
 
 from django.conf import settings
@@ -18,11 +21,26 @@ logger = logging.getLogger(__name__)
 
 
 class TweetWordCloudAPIView(views.APIView):
-    """ Endpoint for viewing tweet-word clouds """
+    """
+    Endpoint for viewing tweet-word clouds.
+    Requires TokenAuthentication
+    """
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
+        """
+        Post request to api/tweet-word-cloud/ endpoint.
+        Requires the arguments 'response_format', 'words'.
+
+        :param request: an api request
+        :param args: request args
+        :param kwargs: request args
+        :returns: A Response object with content a dictionary returned
+        from utils.TweetTextParser.extract_word_cloud method.
+        :raises: serializers.ValidationError | exceptions.TweetyParserException |
+        exceptions.TweetyGeneralException
+        """
         try:
             serializer = serializers.TweetWordCloudSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -51,9 +69,9 @@ class TweetWordCloudAPIView(views.APIView):
             raise
         except exceptions.TweetyParserException:
             raise
-        except Exception as e:
+        except Exception as err:
             details = "Error creating daily word cloud. Contact support for more info."
-            logger.exception(e)
+            logger.exception(err)
             raise exceptions.TweetyGeneralException(detail=details)
 
 
@@ -64,24 +82,50 @@ class UserRegisterAPIView(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        content = {
+        """
+        Post request to api/register/ endpoint.
+        Requires the arguments "username", "password".
+
+        :param request: an api request
+        :param args: request args
+        :param kwargs: request args
+        :returns: A Response object with the following content:
+        {
             'success': 'True',
             'status code': status.HTTP_200_OK,
             'message': 'User registered  successfully',
         }
-        logger.info(f"User: {serializer} registered successfully")
+        :raises: serializers.ValidationError
+        """
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         status_code = status.HTTP_200_OK
+        content = {
+            'success': 'True',
+            'status code': status_code,
+            'message': 'User registered  successfully',
+        }
+        message = f"User: {serializer} registered successfully"
+        logger.info(message)
         return Response(content, status=status_code)
 
 
 class HelloAPIView(views.APIView):
-    """ Hello API Endpoint """
+    """
+    Hello API Endpoint
+    Requires TokenAuthentication
+    """
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
+        """
+        Welcoming get request.
+        :param request: an api request
+        :param args: request args
+        :param kwargs: request args
+        :returns: A Response object with a simple message
+        """
         content = {"message": "Hello my name is Tweety!"}
         return Response(content)

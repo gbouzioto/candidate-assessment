@@ -13,16 +13,20 @@ from . import exceptions
 
 logger = logging.getLogger(__name__)
 
-search_args = searchtweets.load_credentials(settings.SEARCH_TWEETS_CREDENTIAL_FILE, env_overwrite=False)
+search_args = searchtweets.load_credentials(settings.SEARCH_TWEETS_CREDENTIAL_FILE,
+                                            env_overwrite=False)
 
 
-class TweetTextParser(object):
+class TweetTextParser:
     """Class used for parsing and processing the text attribute of tweets"""
     # REGEX
     LOWER_TEXT_RE = re.compile(r"[a-z]+-?[a-z]+")
     # matches tweeter's cashtags, user_mentions, retweets, urls and numeric words
     NON_WORDS_RE = re.compile(r"([@$][A-Za-z0-9]+)|([^0-9A-Za-z])|(\S*\d+\S*)|(RT)")
     UTC_TIMEZONE_RE = re.compile(r"[TZ]|\.0+")
+
+    def __str__(self):
+        return "TweetTextParser"
 
     def _tokenize_tweet_text(self, text):
         """
@@ -104,7 +108,8 @@ class TweetTextParser(object):
         :returns: A dictionary containing the timestamp of the first and last tweet
         as well as a list of the words found in descending order. If the format specified is csv, then the words
         will be comma separated instead of list.
-        If the number of words requested is too big then it will return the maximum unique words found in the tweets
+        If the number of words requested is too big then it will return the maximum unique
+        words found in the tweets
         Example:
         {
             words: list | str
@@ -140,8 +145,9 @@ class TweetTextParser(object):
                             break
 
         if len(word_set) < words:
-            message = f"Number of words requested: {words} was bigger than the one in the number" \
-                      f" of tweets: {len(word_set)}.\nConsider increasing settings.MAX_TWEETS value."
+            message = f"""
+            Number of words requested: {words} was bigger than the one in the number
+            of tweets: {len(word_set)}.\nConsider increasing settings.MAX_TWEETS value."""
             logger.warning(message)
 
         words = sorted(list(word_set))
@@ -157,4 +163,5 @@ class TweetTextParser(object):
 
 
 class TweetyCsvRenderer(CSVRenderer):
+    """CSVRenderer class with fields in preferred order"""
     header = ['words', 'topic', 'first_tweet_timestamp', "last_tweet_timestamp"]

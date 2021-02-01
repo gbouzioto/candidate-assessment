@@ -1,3 +1,5 @@
+"""Constants used for in tests"""
+
 MOCK_TWEETS = [{'created_at': '2021-02-01T09:06:14.000Z', 'id': '1356166962372608000',
                 'text': 'Everyone needs to watch this.\n#COVID19 #COVID \nINFLUENCER-19 https://t.co/fF6IEpWK2X via '
                         '@YouTube @dangelno'},
