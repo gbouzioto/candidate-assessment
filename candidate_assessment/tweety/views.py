@@ -101,12 +101,12 @@ class UserRegisterAPIView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         status_code = status.HTTP_200_OK
+        message = f"User: {serializer.data['username']} registered successfully."
         content = {
             'success': 'True',
             'status code': status_code,
-            'message': 'User registered  successfully',
+            'message': message,
         }
-        message = f"User: {serializer} registered successfully"
         logger.info(message)
         return Response(content, status=status_code)
 

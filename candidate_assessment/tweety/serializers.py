@@ -23,6 +23,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class TweetWordCloudSerializer(serializers.Serializer):
     """ Serializer class for tweet-word-cloud request"""
     response_format = serializers.ChoiceField(required=True, choices=['json', 'csv'],
-                                              help_text="Response format can be either json or csv.")
+                                              help_text="Response format can be either json or csv.",
+                                              error_messages={
+                                                  "invalid_choice": "valid choices are 'json' or 'csv'"}
+                                              )
     words = serializers.IntegerField(required=True, min_value=1,
                                      help_text="Number of words to be returned, must be a positive integer.")

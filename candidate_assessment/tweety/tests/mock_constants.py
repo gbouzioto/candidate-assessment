@@ -346,7 +346,6 @@ MOCK_TWEETS = [{'created_at': '2021-02-01T09:06:14.000Z', 'id': '135616696237260
                         "online now. Full details including link to online booking form here: https://t.co/w8ixFpXKls "
                         "https://t.co/xsmhj973Xa"}]
 
-
 MOCK_TWEET = {
     'created_at': '2021-02-01T09:00:00.000Z',
     'id': '1356165393551912961',
@@ -364,10 +363,36 @@ MOCK_CLOUD_SUCCESS = {
     'words': 100
 }
 
-
 MOCK_MAX_CLOUD = {
     'first_tweet_timestamp': '01-02-2021 09:00:00 UTC',
     'last_tweet_timestamp': '01-02-2021 09:06:14 UTC',
     'topic': 'covid',
     'words': 917
 }
+
+CSV_100_WORD_CLOUD = {
+    'words': 'advance, aged, amp, an, and, anyone, ap, appoinment, are, as, be, beat, book, booking, brace, city, '
+             'colleagues, coming, coronavirus, could, covid, criticalcareparamedic, details, do, expert, for, form, '
+             'full, have, haven, health, healthnews, heartattacks, here, how, humor, hurricane, impact, in, including, '
+             'incorporate, into, is, know, link, live, long, need, news, no, northeastlondon, now, of, on, online, our,'
+             ' pa, predicted, received, restrictions, resulted, retrieval, revival, says, sex, show, simple, some, '
+             'storyline, strain, tackle, tasked, team, that, the, their, this, time, to, tune, up, us, vaccination, '
+             'virulent, visit, wait, warns, wellnessiq, were, who, will, wion, wionnews, with, working, xray, year, '
+             'yet, you, your',
+    'topic': 'covid', 'first_tweet_timestamp': '01-02-2021 09:00:00 UTC',
+    'last_tweet_timestamp': '01-02-2021 09:00:10 UTC'}
+
+JSON_100_WORD_CLOUD = {
+    'words': ['advance', 'aged', 'amp', 'an', 'and', 'anyone', 'ap', 'appoinment', 'are', 'as', 'be', 'beat', 'book',
+              'booking', 'brace', 'city', 'colleagues', 'coming', 'coronavirus', 'could', 'covid',
+              'criticalcareparamedic', 'details', 'do', 'expert', 'for', 'form', 'full', 'have', 'haven', 'health',
+              'healthnews', 'heartattacks', 'here', 'how', 'humor', 'hurricane', 'impact', 'in', 'including',
+              'incorporate', 'into', 'is', 'know', 'link', 'live', 'long', 'need', 'news', 'no', 'northeastlondon',
+              'now', 'of', 'on', 'online', 'our', 'pa', 'predicted', 'received', 'restrictions', 'resulted',
+              'retrieval', 'revival', 'says', 'sex', 'show', 'simple', 'some', 'storyline', 'strain', 'tackle',
+              'tasked', 'team', 'that', 'the', 'their', 'this', 'time', 'to', 'tune', 'up', 'us', 'vaccination',
+              'virulent', 'visit', 'wait', 'warns', 'wellnessiq', 'were', 'who', 'will', 'wion', 'wionnews', 'with',
+              'working', 'xray', 'year', 'yet', 'you', 'your'],
+    'topic': 'covid',
+    'first_tweet_timestamp': '01-02-2021 09:00:00 UTC',
+    'last_tweet_timestamp': '01-02-2021 09:00:10 UTC'}

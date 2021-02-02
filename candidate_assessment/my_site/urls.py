@@ -18,6 +18,6 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('', include('tweety.urls')),
+    path('tweety-api/', include('tweety.urls', namespace="tweety-api")),
     path('admin/', admin.site.urls)
 ]
